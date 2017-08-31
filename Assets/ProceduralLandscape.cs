@@ -37,22 +37,22 @@ public class ProceduralLandscape : MonoBehaviour {
 		// apply the diamond step
 		xx = Wrap (x + step);
 		yy = Wrap (y + step);
-		heightMap [Wrap (xx), Wrap (yy)] = AvgDiamond (xx, yy);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgDiamond (xx, yy, step);
 		Square (xx, yy, step);
 
 		xx = Wrap (x - step);
 		yy = Wrap (y + step);
-		heightMap [Wrap (xx), Wrap (yy)] = AvgDiamond (xx, yy);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgDiamond (xx, yy, step);
 		Square (xx, yy, step);
 
 		xx = Wrap (x + step);
 		yy = Wrap (y - step);
-		heightMap [Wrap (xx), Wrap (yy)] = AvgDiamond (xx, yy);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgDiamond (xx, yy, step);
 		Square (xx, yy, step);
 
 		xx = Wrap (x - step);
 		yy = Wrap (y - step);
-		heightMap [Wrap (xx), Wrap (yy)] = AvgDiamond (xx, yy);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgDiamond (xx, yy, step);
 		Square (xx, yy, step);
 	}
 
@@ -61,32 +61,42 @@ public class ProceduralLandscape : MonoBehaviour {
 		int xx, yy;
 		// apply the square step
 		xx = Wrap (x + step);
+		yy = Wrap (y       );
+		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy, step);
+
+		xx = Wrap (x       );
 		yy = Wrap (y + step);
-		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy, step);
+
+		xx = Wrap (x      );
+		yy = Wrap (y - step);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy, step);
 
 		xx = Wrap (x - step);
-		yy = Wrap (y + step);
-		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy);
-
-		xx = Wrap (x + step);
-		yy = Wrap (y - step);
-		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy);
-
-		xx = Wrap (x - step);
-		yy = Wrap (y - step);
-		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy);
+		yy = Wrap (y       );
+		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy, step);
 
 		Diamond (x, y, step / 2);
 	}
 
-	float AvgDiamond(int x, int y) {
-		int xx, yy;
-		return 0;
+	float AvgDiamond(int x, int y, int step) {
+		float total =
+			heightMap [Wrap (x + step), Wrap (y + step)] +
+			heightMap [Wrap (x - step), Wrap (y + step)] +
+			heightMap [Wrap (x + step), Wrap (y - step)] +
+			heightMap [Wrap (x - step), Wrap (y - step)] +
+			Random.Range(0,maxHeight);
+		return total % maxHeight;
 	}
 
-	float AvgSquare(int x, int y) {
-		int xx, yy;
-		return 0;
+	float AvgSquare(int x, int y, int step) {
+		float total =
+			heightMap [Wrap (x + step), Wrap (y       )] +
+			heightMap [Wrap (x - step), Wrap (y       )] +
+			heightMap [Wrap (x       ), Wrap (y + step)] +
+			heightMap [Wrap (x       ), Wrap (y - step)] +
+			Random.Range(0,maxHeight);
+		return total % maxHeight;
 	}
 
 	int Wrap(int c) {
