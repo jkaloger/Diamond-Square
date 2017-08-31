@@ -58,17 +58,34 @@ public class ProceduralLandscape : MonoBehaviour {
 
 	// square step
 	void Square(int x, int y, int step) {
+		int xx, yy;
+		// apply the square step
+		xx = Wrap (x + step);
+		yy = Wrap (y + step);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy);
 
+		xx = Wrap (x - step);
+		yy = Wrap (y + step);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy);
+
+		xx = Wrap (x + step);
+		yy = Wrap (y - step);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy);
+
+		xx = Wrap (x - step);
+		yy = Wrap (y - step);
+		heightMap [Wrap (xx), Wrap (yy)] = AvgSquare (xx, yy);
+
+		Diamond (x, y, step / 2);
 	}
 
 	float AvgDiamond(int x, int y) {
-
-
+		int xx, yy;
 		return 0;
 	}
 
 	float AvgSquare(int x, int y) {
-
+		int xx, yy;
 		return 0;
 	}
 
